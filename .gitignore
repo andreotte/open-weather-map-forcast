@@ -347,4 +347,7 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
+#custom
+Web.Secrets.config
+
 # End of https://www.gitignore.io/api/visualstudio
