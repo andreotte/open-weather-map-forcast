@@ -10,7 +10,6 @@ namespace WeatherFromOpenWeatherMap.Models
 {
     public class OpenWeatherMapDAL
     {
-        //https://api.openweathermap.org/data/2.5/forecast?zip=[ZIP CODE],us&APPID=[YOUR API KEY]
         public static List<Forecast> GetFiveDayThreeHourForecastJSON(string zipcode)
         {
             string apiKey = ConfigReaderDAL.ReadSetting("api_key");
