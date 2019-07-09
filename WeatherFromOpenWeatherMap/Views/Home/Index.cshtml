@@ -5,18 +5,21 @@
 }
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
 <script>     
     function getFiveDayThreeHourWeather() {
-        const tableDiv = document.getElementById("ajax");
+        const tableDiv = document.getElementById("table");
 
         function getWeather(callback) {
             var weather = 'https://api.openweathermap.org/data/2.5/forecast?zip='+zipCode.value+'&appid='+'@apiKey';
             $.ajax({
-              dataType: "jsonp",
-              jsonpCallback: 'jsonCallback',
-              url: weather,
-              password: "bf8227f467382d0f7b5faf6cfb7bab7a",
-              success: callback
+                dataType: "jsonp",
+                jsonpCallback: 'jsonCallback',
+                url: weather,
+                password: "bf8227f467382d0f7b5faf6cfb7bab7a",
+                success: callback
+            }).fail(function () {
+                alert("Invalid zip code. Forecast not retrieved.");
             });
         }
 
@@ -24,14 +27,15 @@
         getWeather(function (data) {
             console.log('weather data received');
             //console.log(data);
+            document.getElementById("cityName").innerHTML = `${data["city"]["name"]}, ${data["city"]["country"]}`;
             const weatherForecasts = data["list"];
 
-            tableDiv.innerHTML += '<table class="table"><tr><th>Date</th><th>Temperature) (°F)</th><th>Pressure (hPa)</th><th></th></tr>';
+            tableDiv.innerHTML = '<table class="table"><tr><th>Date</th><th>Temperature (°F)</th><th>Pressure (hPa)</th><th></th></tr>';
             const weatherTable = document.getElementsByClassName("table");
 
             weatherForecasts.forEach(function (item) {
                 let newRow = document.createElement('tr');
-                newRow.innerHTML = `<tr><td>${item["dt_txt"]}</td><td>${item["main"]["temp"]}</td><td>${item["main"]["pressure"]}</td><tr>`;
+                newRow.innerHTML = `<tr><td>${item["dt_txt"]}</td><td>${(1.8 * (item["main"]["temp"] - 273.15) + 32).toFixed(1)}</td><td>${item["main"]["pressure"]}</td><tr>`;
                 weatherTable[0].appendChild(newRow);
             });
 
@@ -42,45 +46,16 @@
 
 <div class="heading">
     <br /><br />
-    <form onsubmit=" return getFiveDayThreeHourWeather()">
-        @*Enter Zip Code: <input id="zip" name="zip" type="text" inputmode="numeric" pattern="^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$">*@
-        Enter Zip Code: <input id="zip" name="zip" type="number" >
-        <input type="button" onclick="getFiveDayThreeHourWeather()" value="Get Weather">
-        @*<input type="submit" value="Get Weather" />*@
+    <form action="javascript: getFiveDayThreeHourWeather()">
+        Enter Zip Code: <input id="zip" type="text" pattern="[0-9]{5}" title="Five digit zip code" required>
+        <input type="submit" value="Get Weather" />
     </form>
+    <br /><br />
 </div>
-<div id="ajax"></div>
-
-@*<table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Temperature) (°F)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pressure) (hPa)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Temperature)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pressure)
-            </td>
-
-        </tr>
-    }
-
-    </table>*@
+<div>
+    <h3 id="cityName"></h3>
+</div>
+<div id="table"></div>
 
 <script>    
     const zipCode = document.getElementById("zip");
