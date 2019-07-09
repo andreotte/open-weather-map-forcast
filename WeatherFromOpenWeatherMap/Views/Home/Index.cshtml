@@ -5,32 +5,35 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
 <script>     
+    // Function called when the user enters a valid zip code and submits form. 
     function getFiveDayThreeHourWeather() {
         const tableDiv = document.getElementById("table");
 
+        //Function to call API
         function getWeather(callback) {
+            //API call to openweathermap to get 5 day, 3 hour forcast
             var weather = 'https://api.openweathermap.org/data/2.5/forecast?zip='+zipCode.value+'&appid='+'@apiKey';
             $.ajax({
                 dataType: "jsonp",
                 jsonpCallback: 'jsonCallback',
                 url: weather,
-                password: "bf8227f467382d0f7b5faf6cfb7bab7a",
                 success: callback
             }).fail(function () {
                 alert("Invalid zip code. Forecast not retrieved.");
             });
         }
 
-        // get data:
+        // get JSON back from API call and build out the weather table 
         getWeather(function (data) {
             console.log('weather data received');
-            //console.log(data);
             document.getElementById("cityName").innerHTML = `${data["city"]["name"]}, ${data["city"]["country"]}`;
             const weatherForecasts = data["list"];
 
+            // Table header
             tableDiv.innerHTML = '<table class="table"><tr><th>Date</th><th>Temperature (°F)</th><th>Pressure (hPa)</th><th></th></tr>';
             const weatherTable = document.getElementsByClassName("table");
 
+            // Table rows for each 3 hr data point
             weatherForecasts.forEach(function (item) {
                 let newRow = document.createElement('tr');
                 newRow.innerHTML = `<tr><td>${item["dt_txt"]}</td><td>${(1.8 * (item["main"]["temp"] - 273.15) + 32).toFixed(1)}</td><td>${item["main"]["pressure"]}</td><tr>`;
