@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WeatherFromOpenWeatherMap.Models;
 
 namespace WeatherFromOpenWeatherMap.Controllers
 {
@@ -11,8 +10,6 @@ namespace WeatherFromOpenWeatherMap.Controllers
     {
         public ActionResult Index()
         {
-            //List<Forecast> forecasts = OpenWeatherMapDAL.GetFiveDayThreeHourForecastJSON("49505");
-            //return View(forecasts);
             return View();
         }
     }

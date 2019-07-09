@@ -125,8 +125,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ConfigReaderDAL.cs" />
-    <Compile Include="Models\Forecast.cs" />
-    <Compile Include="Models\OpenWeatherMapDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
