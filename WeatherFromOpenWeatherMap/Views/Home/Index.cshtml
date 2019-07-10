@@ -2,21 +2,23 @@
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/OpenWeatherMapCall.js"></script>
 
-<div class="heading">
-    <br /><br />
+<br /><br />
+<div>
     @*Call the API on form submit using function in OpenWeatherMapCall.js*@
     <form action="javascript: getFiveDayThreeHourWeather()">
-        Enter Zip Code: <input id="zip" type="text" pattern="[0-9]{5}" title="Five digit zip code" required>
+        <h4 style="display: inline">Enter Zip Code:</h4> 
+        <input id="zip" type="text" pattern="[0-9]{5}" title="Five digit zip code" required>
         <input type="submit" value="Get Weather" />
     </form>
-    <br /><br />
 </div>
+
+<br /><br />
 <div>
     <h3 id="cityName"></h3>
 </div>
 <div id="table"></div>
 
-@*Parameters to call the api with.*@ 
+@*Parameters used to call the api.*@ 
 <script>    
     const zipCode = document.getElementById("zip");
     const apiKey = '@ConfigReaderDAL.ReadSetting("api_key")';
