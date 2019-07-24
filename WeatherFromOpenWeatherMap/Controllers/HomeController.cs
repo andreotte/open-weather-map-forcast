@@ -11,9 +11,14 @@ namespace WeatherFromOpenWeatherMap.Controllers
     {
         public ActionResult Index()
         {
-            //List<Forecast> forecasts = OpenWeatherMapDAL.GetFiveDayThreeHourForecastJSON("49505");
-            //return View(forecasts);
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Index(string zipCode)
+        {
+            List<Forecast> forecasts = OpenWeatherMapDAL.GetFiveDayThreeHourForecastJSON(zipCode);
+            return View(forecasts);
         }
     }
 }
